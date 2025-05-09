@@ -1,17 +1,19 @@
-from typing import Generic, Type, TypeVar, Any, Sequence
+from typing import Generic, TypeVar, Sequence
 from uuid import uuid4
 from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-# This Generic Type variable helps IDEs know that 'cls' returns an instance of the Model
-CreateSchemaT = TypeVar("CreateSchemaT", bound=BaseModel)
+
 ModelType = TypeVar("ModelType", bound="CRUDMixin")
+# Input Schemas
+CreateSchemaT = TypeVar("CreateSchemaT", bound=BaseModel)
+UpdateSchemaT = TypeVar("UpdateSchemaT", bound=BaseModel)
 
 
-class CRUDMixin(Generic[CreateSchemaT]):
+class CRUDMixin(Generic[CreateSchemaT, UpdateSchemaT]):
     """
-    A Mixin that adds convenience create/get/get_all methods.
+    A Mixin that adds convenience crud methods.
     Assumes the model uses a String ID (UUID hex) as the primary key.
     """
 
@@ -50,3 +52,26 @@ class CRUDMixin(Generic[CreateSchemaT]):
         # Sequence is the correct return type for .all() results
         result = await db.execute(select(cls))
         return result.scalars().all()
+
+    @classmethod
+    async def delete(cls: type[ModelType], db: AsyncSession) -> None:
+        await db.delete(cls)
+        await db.commit()
+
+    @classmethod
+    async def update(
+        cls: type[ModelType], db: AsyncSession, obj_id: str, obj_in: UpdateSchemaT
+    ) -> ModelType | None:
+        db_obj = await cls.get(db, obj_id)
+        if not db_obj:
+            return None
+
+        # update object by value or merge objects?
+        # for field, value in obj_in.
+        # for field, value in obj_in.items():
+        #     setattr(db_obj, field, value)
+
+        db.add(db_obj)
+        await db.commit()
+        await db.refresh(db_obj)
+        return db_obj
