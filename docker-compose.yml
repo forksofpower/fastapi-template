@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      # target: base
+    image: fastapi-postgres-app
+    # Common configurations like network, etc.
+    networks:
+      - app-network
+
+  db:
+    image: postgres:16-alpine # Use a specific version for stability
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    networks:
+      - app-network
+    restart: always # Ensures the DB restarts if it fails
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

@@ -101,7 +101,7 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 from alembic import context
 
 from app.models.base_class import Base  # Access your model registry
-from app.models.user import User  # Ensure your models are imported
+from app.models.profile import UserProfile  # Ensure your models are imported
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
