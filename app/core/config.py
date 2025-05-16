@@ -11,6 +11,10 @@ class Settings(BaseSettings):
     POSTGRES_DB: str
     POSTGRES_PORT: int = 5432
 
+    USER_RESET_PASSWORD_TOKEN_SECRET: str = "secret"
+    USER_VERIFICATION_TOKEN_SECRET: str = "secret"
+    USER_JWT_SECRET: str = "secret"
+
     @property
     def SQLALCHEMY_DATABASE_URI(self) -> str:
         return (
