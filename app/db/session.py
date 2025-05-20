@@ -1,19 +1,9 @@
-import contextlib
-from typing import AsyncIterator
-
-from fastapi import Depends
-
 from sqlalchemy.ext.asyncio import (
-    AsyncConnection,
-    AsyncEngine,
-    AsyncSession,
     create_async_engine,
     async_sessionmaker,
 )
-from sqlalchemy.orm import declarative_base
 from app.core.config import settings
 
-DB_EXCEPTION = "DatabasSessionManager is not initialized"
 engine = create_async_engine(
     settings.SQLALCHEMY_DATABASE_URI,
     echo=False,  # Set True for debugging SQL queries
@@ -26,6 +16,7 @@ AsyncSessionLocal = async_sessionmaker(
 )
 
 
+# DB_EXCEPTION = "DatabasSessionManager is not initialized"
 # class DatabaseSessionManager:
 #     _engine: AsyncEngine | None
 #     _sessionmaker: async_sessionmaker | None
