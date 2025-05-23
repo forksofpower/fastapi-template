@@ -13,7 +13,7 @@ from app.schemas.profiles import UserProfileCreate, UserProfileUpdate
 class UserProfile(Base, CRUDMixin[UserProfileCreate, UserProfileUpdate]):
     id: Mapped[str] = mapped_column(primary_key=True, index=True)
     user_id: Mapped[str] = mapped_column(ForeignKey("user.id"))
-    user = relationship("User", back_populates="userprofile")
+    user = relationship("User", back_populates="profile")
     # email: Mapped[str] = mapped_column(String(255), index=True)
     display_name: Mapped[str] = mapped_column(String(255), nullable=False)
     biography: Mapped[str] = mapped_column(String, nullable=True)
