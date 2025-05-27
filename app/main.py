@@ -14,3 +14,17 @@ app.include_router(api_router, prefix=settings.API_V1_STR)
 @app.get("/health")
 async def health_check():
     return {"status": "ok"}
+
+
+# def print_routes(application: FastAPI):
+#     print("Routes:")
+#     for route in application.routes:
+#         if isinstance(route, APIRoute):
+#             print(
+#                 f"* Path: {route.path} | Methods: {', '.join(route.methods)} | Name: {route.name}"
+#             )
+
+# if __name__ == "__main__":
+
+
+# print_routes(app)
