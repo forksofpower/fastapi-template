@@ -1,14 +1,14 @@
 version: '3.8'
 
 services:
-  # web:
-  #   build:
-  #     context: .
-  #     # target: base
-  #   image: fastapi-postgres-app
-  #   # Common configurations like network, etc.
-  #   networks:
-  #     - app-network
+  web:
+    build:
+      context: .
+      # target: base
+    image: fastapi-postgres-app
+    # Common configurations like network, etc.
+    networks:
+      - app-network
 
   db:
     image: postgres:16-alpine # Use a specific version for stability
