@@ -2,14 +2,11 @@ from sqlalchemy.ext.asyncio import (
     create_async_engine,
     async_sessionmaker,
 )
-from app.core.config import settings
+from app.core.config import get_app_settings
 
-engine = create_async_engine(
-    settings.SQLALCHEMY_DATABASE_URI,
-    echo=False,  # Set True for debugging SQL queries
-    future=True,
-    pool_pre_ping=True,  # handles dropped connections
-)
+settings = get_app_settings()
+
+engine = create_async_engine(**settings.sqlalchemy_engine_props)
 
 AsyncSessionLocal = async_sessionmaker(
     bind=engine, autoflush=False, expire_on_commit=False

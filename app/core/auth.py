@@ -3,11 +3,15 @@ from fastapi_users.authentication import (
     BearerTransport,
     JWTStrategy,
 )
-from app.core.config import settings
+from app.core.config import get_app_settings
 
 
 def get_jwt_strategy() -> JWTStrategy:
-    return JWTStrategy(secret=settings.USER_JWT_SECRET, lifetime_seconds=3600)
+    settings = get_app_settings()
+    return JWTStrategy(
+        secret=settings.jwt_secret_key,
+        lifetime_seconds=(settings.jwt_token_expiration_minutes * 60),
+    )
 
 
 bearer_transport = BearerTransport(tokenUrl="auth/jwt/login")

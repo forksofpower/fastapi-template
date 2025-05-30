@@ -4,14 +4,15 @@ from fastapi_users import BaseUserManager, FastAPIUsers, UUIDIDMixin
 from fastapi_users.db import SQLAlchemyUserDatabase
 
 from app.api.deps import get_user_db
-from app.core.config import settings
+from app.core.config import get_app_settings
 from app.models.user import User
 from .auth import auth_backend
 
 
 class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
-    reset_password_token_secret = settings.USER_RESET_PASSWORD_TOKEN_SECRET
-    verification_token_secret = settings.USER_VERIFICATION_TOKEN_SECRET
+    settings = get_app_settings()
+    reset_password_token_secret = settings.reset_token_secret
+    verification_token_secret = settings.verification_token_secret
 
     async def on_after_register(
         self, user: User, request: Request | None = None

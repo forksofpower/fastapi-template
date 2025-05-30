@@ -1,14 +1,16 @@
 from fastapi import FastAPI
-from app.core.config import settings
+from app.core.config import get_app_settings
 from app.api.v1.api import router as api_router
 
+settings = get_app_settings()
+
 app = FastAPI(
-    title=settings.PROJECT_NAME, openapi_url=f"{settings.API_V1_STR}/openapi.json"
+    title=settings.title, openapi_url=f"{settings.openapi_prefix}{settings.openapi_url}"
 )
 
 
 # Routers
-app.include_router(api_router, prefix=settings.API_V1_STR)
+app.include_router(api_router, prefix=settings.api_prefix)
 
 
 @app.get("/health")

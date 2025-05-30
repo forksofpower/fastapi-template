@@ -15,6 +15,9 @@ class AppSettings(BaseAppSettings):
 
     secret_key: str
 
+    reset_token_secret: str
+    verification_token_secret: str
+
     api_prefix: str = "/api/v1"
 
     allowed_hosts: list[str] = ["*"]
