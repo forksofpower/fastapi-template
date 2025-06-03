@@ -10,13 +10,30 @@ app = FastAPI(
 
 
 # Routers
-app.include_router(api_router, prefix=settings.api_prefix)
+# app.include_router(api_router, prefix=settings.api_prefix)
 
 
-@app.get("/health")
-async def health_check():
-    return {"status": "ok"}
+# @app.get("/health")
+# async def health_check():
+#     return {"status": "ok"}
 
+
+def create_app() -> FastAPI:
+    settings = get_app_settings()
+
+    application = FastAPI(**settings.fastapi_kwargs)
+
+    # application.add_middleware(
+    #     CORSMiddleware,
+
+    # )
+
+    application.include_router(api_router, prefix=settings.api_prefix)
+
+    return application
+
+
+app = create_app()
 
 # def print_routes(application: FastAPI):
 #     print("Routes:")

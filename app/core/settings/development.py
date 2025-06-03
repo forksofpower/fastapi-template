@@ -1,7 +1,8 @@
 import logging
 
 from pydantic import computed_field
-from app.core.settings.app import AppSettings
+
+from .app import AppSettings
 
 
 class DevAppSettings(AppSettings):

@@ -1,6 +1,6 @@
 import logging
 from typing import Any
-from app.core.config import BaseAppSettings
+from .base import BaseAppSettings
 from version import response
 
 
