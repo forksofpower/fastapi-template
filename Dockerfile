@@ -18,6 +18,8 @@ RUN uv pip install --no-cache-dir -r pyproject.toml
 
 # Copy application code
 COPY ./app /code/app
+COPY ./version.py /code/
 COPY ./.env /code/
+COPY ./.env.dev /code/
 
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

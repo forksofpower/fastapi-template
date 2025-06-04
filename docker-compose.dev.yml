@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   web:
     # Use the image built from the base config
@@ -8,10 +6,10 @@ services:
       - "8000:8000"
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     volumes:
-      - ./app:/code/app # Bind mount for live code changes
+      - ./:/code # Bind mount for live code changes
     environment:
       # Use .env for secrets in development
-      APP_ENV: development
+      APP_ENV: dev
     depends_on:
       - db # Ensure DB starts first
   db:
