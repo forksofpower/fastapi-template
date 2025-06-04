@@ -7,9 +7,7 @@ services:
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     volumes:
       - ./:/code # Bind mount for live code changes
-    environment:
-      # Use .env for secrets in development
-      APP_ENV: dev
+    environment: .env.dev
     depends_on:
       - db # Ensure DB starts first
   db:
